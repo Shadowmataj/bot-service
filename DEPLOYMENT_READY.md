@@ -409,3 +409,4 @@ public void migrateUnencryptedData() {
 **Impacto:** 🔒 **ALTO** (protección significativa de datos sensibles)
 
 **Siguiente Acción:** Reiniciar aplicación y ejecutar testing E2E.
+
