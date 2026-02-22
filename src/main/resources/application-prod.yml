@@ -4,6 +4,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+    show-sql: false
+    open-in-view: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -12,7 +14,6 @@ spring:
             non_contextual_creation: true
         format_sql: false
         use_sql_comments: false
-    show-sql: false
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
@@ -88,10 +89,6 @@ logging:
       hibernate: WARN
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
-  file:
-    name: logs/bot-service-prod.log
-    max-size: 10MB
-    max-history: 30
 
 security:
   encryption:
