@@ -1,0 +1,28 @@
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - PORT=${PORT}
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_USERNAME=${DATABASE_USERNAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - WHATSAPP_VERIFY_TOKEN=${WHATSAPP_VERIFY_TOKEN}
+      - WHATSAPP_ACCESS_IDENTIFIER=${WHATSAPP_ACCESS_IDENTIFIER}
+      - WHATSAPP_API_URL=${WHATSAPP_API_URL}
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - portability_net
+networks:
+  portability_net:
+    external: true
+    name: portability_prod

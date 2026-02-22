@@ -1,0 +1,86 @@
+spring:
+  application:
+    name: bot-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: false
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  sql:
+    init:
+      schema-locations: classpath:init/schema.sql
+      mode: always
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o
+      embedding:
+        options:
+          model: text-embedding-ada-002
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: ${PORT}
+
+feign:
+  httpclient:
+    hc5:
+      enabled: true
+
+logging:
+  level:
+    com:
+      portability:
+        bot_service:
+          service:
+            PostgresChatMemory: DEBUG
+            ConversationStateService: DEBUG
+    org:
+      springframework:
+        ai:
+          chat:
+            memory: DEBUG
+
+# Eureka Client Configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+security:
+  encryption:
+    key: ${ENCRYPTION_KEY}
+
+context:
+  data:
+    retention:
+      days: 30
+
+cleanup:
+  schedule:
+    cron: 0 0 2 * * *
+
+whatsapp:
+  verify-token: ${WHATSAPP_VERIFY_TOKEN}
+  access-identifier: ${WHATSAPP_ACCESS_IDENTIFIER}
+  api-url: ${WHATSAPP_API_URL}

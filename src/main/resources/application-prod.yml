@@ -1,0 +1,106 @@
+spring:
+  application:
+    name: bot-service
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        format_sql: false
+        use_sql_comments: false
+    show-sql: false
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  sql:
+    init:
+      mode: never
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o
+      embedding:
+        options:
+          model: text-embedding-ada-002
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  main:
+    allow-bean-definition-overriding: true
+
+server:
+  port: ${PORT:8090}
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-exception: false
+
+feign:
+  httpclient:
+    hc5:
+      enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 10000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    root: INFO
+    com:
+      portability:
+        bot_service: INFO
+    org:
+      springframework: WARN
+      hibernate: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+  file:
+    name: logs/bot-service-prod.log
+    max-size: 10MB
+    max-history: 30
+
+security:
+  encryption:
+    key: ${ENCRYPTION_KEY}
+
+context:
+  data:
+    retention:
+      days: 30
+
+cleanup:
+  schedule:
+    cron: 0 0 2 * * *
+
+whatsapp:
+  verify-token: ${WHATSAPP_VERIFY_TOKEN}
+  access-identifier: ${WHATSAPP_ACCESS_IDENTIFIER}
+  api-url: ${WHATSAPP_API_URL}

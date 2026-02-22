@@ -67,9 +67,6 @@ public class ChatController {
             @RequestParam("hub.mode") String hubMode,
             @RequestParam("hub.challenge") String hubChallenge,
             @RequestParam("hub.verify_token") String hubVerifyToken) {
-
-        System.out.println(
-                "Received WhatsApp verification request: " + hubMode + ", " + hubChallenge + ", " + hubVerifyToken);
         if (hubVerifyToken.equals(whatsappVerifyToken)) {
             return ResponseEntity.ok(hubChallenge);
         } else {

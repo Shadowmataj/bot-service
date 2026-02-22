@@ -33,9 +33,6 @@ build/
 .vscode/
 
 # IDE specific files
-**application.properties
-**application.yml
-**application.yaml
 *.log
 *.tmp
 *.bak
@@ -54,5 +51,9 @@ logs
 
 *bot-service.out
 
+## Environment variable files
+.env
+.env.*
 
+docker-compose-development.yml
 
